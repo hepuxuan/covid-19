@@ -20,4 +20,8 @@ export default [{
   component: React.lazy(() => import('./pages/daily-details')),
   path: '/daily-trend/:date',
   exact: true,
+}, {
+  component: React.lazy(() => import('./pages/daily-country-details')),
+  path: '/daily-trend/:date/:country',
+  exact: true,
 }];

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app';
-import { register } from './serviceWorker';
+import { register, unregister } from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -11,5 +11,16 @@ ReactDOM.render(
 );
 
 if (process.env.NODE_ENV === 'production') {
-  register();
+  if (process.env.ENABLE_SW === 'true') {
+    register({
+      onUpdate() {
+        const alert = document.getElementById('new-version-alert');
+        if (alert) {
+          alert.style.display = 'block';
+        }
+      },
+    });
+  } else {
+    unregister();
+  }
 }

@@ -8,17 +8,29 @@ import {
 import { SimpleTopAppBar, TopAppBarFixedAdjust } from '@rmwc/top-app-bar';
 import { GridCell, Grid, GridRow } from '@rmwc/grid';
 import { CircularProgress } from '@rmwc/circular-progress';
+import ErrorBoundary from 'react-error-boundary';
+import { RMWCProvider } from '@rmwc/provider';
 import routes from '../../routes';
 import icon from './virus.svg';
 import styles from './index.module.css';
 
 import 'normalize.css';
 import './mdc';
+import SomethingIsWrong from '../error';
 
 function App() {
   return (
     <BrowserRouter>
-      <>
+      <RMWCProvider
+        typography={{
+          defaultTag: 'div',
+          headline1: 'h1',
+          headline2: 'h2',
+          headline3: 'h3',
+          headline4: 'h4',
+          headline5: 'h5',
+        }}
+      >
         <SimpleTopAppBar
           title={
             (
@@ -38,24 +50,26 @@ function App() {
         />
         <TopAppBarFixedAdjust />
         <div className={styles.safeArea}>
-          <React.Suspense fallback={(
-            <div className={styles.spinnerWrapper}>
-              <CircularProgress size="large" />
-            </div>
-          )}
-          >
-            <Switch>
-              {
-                routes.map((props) => (
-                  <Route key={props.path} path={props.path} exact={props.exact}>
-                    <props.component />
-                  </Route>
-                ))
-              }
-            </Switch>
-          </React.Suspense>
+          <ErrorBoundary FallbackComponent={SomethingIsWrong}>
+            <React.Suspense fallback={(
+              <div className={styles.spinnerWrapper}>
+                <CircularProgress size="large" />
+              </div>
+            )}
+            >
+              <Switch>
+                {
+                  routes.map((props) => (
+                    <Route key={props.path} path={props.path} exact={props.exact}>
+                      <props.component />
+                    </Route>
+                  ))
+                }
+              </Switch>
+            </React.Suspense>
+          </ErrorBoundary>
         </div>
-      </>
+      </RMWCProvider>
     </BrowserRouter>
   );
 }

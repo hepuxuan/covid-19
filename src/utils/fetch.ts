@@ -4,7 +4,15 @@ async function fetcher(url: string) {
     credentials: 'same-origin',
   });
 
+  if (!res.ok) {
+    throw new Error(res.status?.toString());
+  }
+
   return res.json();
 }
 
-export default fetcher;
+function getNumericSign(number: number | string) {
+  return +number >= 0 ? '+' : '';
+}
+
+export { fetcher, getNumericSign };

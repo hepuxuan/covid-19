@@ -5,11 +5,13 @@
   "dependencies": {
     "@antv/data-set": "^0.11.4",
     "@antv/g2": "^4.0.6",
+    "@rmwc/badge": "^6.0.14",
     "@rmwc/button": "^6.0.14",
     "@rmwc/card": "^6.0.14",
     "@rmwc/circular-progress": "^6.0.14",
     "@rmwc/data-table": "^6.0.14",
     "@rmwc/grid": "^6.0.14",
+    "@rmwc/provider": "^6.0.14",
     "@rmwc/top-app-bar": "^6.0.14",
     "@rmwc/typography": "^6.0.14",
     "classnames": "^2.2.6",
@@ -19,6 +21,7 @@
     "react": "^16.13.1",
     "react-countup": "^4.3.3",
     "react-dom": "^16.13.1",
+    "react-error-boundary": "^1.2.5",
     "react-measure": "^2.3.0",
     "react-router-dom": "^5.1.2",
     "swr": "^0.2.0"

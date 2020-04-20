@@ -81,6 +81,7 @@ const WorldTrend: React.FC<{}> = () => {
       .tooltip('combinedKey*confirmed')
       .style({
         fillOpacity: 0.45,
+        lineWidth: 0,
       })
       .state({
         active: {

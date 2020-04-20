@@ -7,15 +7,15 @@
 }
 
 .confirmCard {
-  border-bottom: 10px solid rgba(0,0,255,.5);
+  border-bottom: 10px solid rgba(0,0,255,1);
 }
 
 .deathCard {
-  border-bottom: 10px solid rgba(255,0,0,.5);
+  border-bottom: 10px solid rgb(236, 49, 75);
 }
 
 .recoverdCard {
-  border-bottom: 10px solid rgba(0,255,0,.5);
+  border-bottom: 10px solid rgb(5, 181, 132);
 }
 
 .activeCard {
@@ -40,4 +40,38 @@
 .countryRow > * {
   padding: 0 10px;
   vertical-align: middle;
+}
+
+.countryCardRow {
+  padding: 8px 0 0 !important;
+}
+.countryCardRow .rowLabel {
+  text-align: right;
+}
+.countryCardRow .rowItem {
+  display: inline-block;
+  width: 100%;
+  text-align: left;
+}
+.countryFlag {
+  vertical-align: middle;
+}
+
+.deltaConfirmed {
+  font-size: 12px;
+  color: rgba(0,0,255,1);
+}
+
+.deltaDeaths {
+  font-size: 12px;
+  color: rgb(236, 49, 75);
+}
+
+.deltaRecovered {
+  font-size: 12px;
+  color: rgb(5, 181, 132);
+}
+
+.countryCard {
+  min-height: 161px;
 }

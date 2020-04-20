@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom';
 import styles from './index.module.css';
 import { useConfirmedDataByCountry } from '../../hooks/data';
 import Breadcrumb from '../../components/breadcrumb';
+import { getNumericSign } from '../../utils/fetch';
 
 const Countries: React.FC<{}> = () => {
   const { data } = useConfirmedDataByCountry();
@@ -37,20 +38,56 @@ const Countries: React.FC<{}> = () => {
           <DataTableBody>
             {
               data.map(({
-                country, confirmed, recovered, deaths, active, iso3, iso2,
+                country,
+                confirmed,
+                recovered,
+                deaths,
+                active,
+                countryRegion,
+                iso2,
+                deltaConfirmed,
+                deltaDeaths,
+                deltaRecovered,
               }) => (
                 <DataTableRow key={country}>
                   <DataTableCell className={styles.countryCell}>
-                    <Link to={`/countries/${iso3}`}>
+                    <Link to={`/countries/${countryRegion}`}>
                       <img className={styles.countryFlag} src={`https://www.countryflags.io/${iso2}/flat/16.png`} alt="" />
                       <Button dense>
                         {country}
                       </Button>
                     </Link>
                   </DataTableCell>
-                  <DataTableCell isNumeric>{confirmed.toLocaleString()}</DataTableCell>
-                  <DataTableCell isNumeric>{recovered.toLocaleString()}</DataTableCell>
-                  <DataTableCell isNumeric>{deaths.toLocaleString()}</DataTableCell>
+                  <DataTableCell isNumeric>
+                    {confirmed.toLocaleString()}
+                    &nbsp;
+                    <span className={styles.deltaConfirmed}>
+                      (
+                      {getNumericSign(deltaConfirmed)}
+                      {deltaConfirmed.toLocaleString()}
+                      )
+                    </span>
+                  </DataTableCell>
+                  <DataTableCell isNumeric>
+                    {recovered.toLocaleString()}
+                    &nbsp;
+                    <span className={styles.deltaRecovered}>
+                      (
+                      {getNumericSign(deltaRecovered)}
+                      {deltaRecovered.toLocaleString()}
+                      )
+                    </span>
+                  </DataTableCell>
+                  <DataTableCell isNumeric>
+                    {deaths.toLocaleString()}
+                    &nbsp;
+                    <span className={styles.deltaDeaths}>
+                      (
+                      {getNumericSign(deltaDeaths)}
+                      {deltaDeaths.toLocaleString()}
+                      )
+                    </span>
+                  </DataTableCell>
                   <DataTableCell isNumeric>{active.toLocaleString()}</DataTableCell>
                 </DataTableRow>
               ))

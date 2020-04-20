@@ -8,14 +8,31 @@
   overflow: auto;
 }
 .countryCell button {
-  max-width: 80px;
+  text-align: left;
+  max-width: 220px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   display: inline-block;
-  text-align: left;
+}
+@media only screen and (max-width: 600px) {
+  .countryCell button {
+    max-width: 80px;
+  }
 }
 
 .countryFlag {
   vertical-align: middle;
+}
+
+.deltaConfirmed {
+  color: rgba(0,0,255,1);
+}
+
+.deltaDeaths {
+  color: rgb(236, 49, 75);
+}
+
+.deltaRecovered {
+  color: rgb(5, 181, 132);
 }
