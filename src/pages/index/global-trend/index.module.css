@@ -1,0 +1,23 @@
+.card {
+  padding: 20px;
+  text-align: center;
+  min-height: 131px;
+  display: flex;
+  justify-content: center;
+}
+
+.confirmCard {
+  border-bottom: 10px solid rgba(0,0,255,1);
+}
+
+.deathCard {
+  border-bottom: 10px solid rgb(236, 49, 75);
+}
+
+.recoverdCard {
+  border-bottom: 10px solid rgb(5, 181, 132);
+}
+
+.activeCard {
+  border-bottom: 10px solid rgba(247, 76, 49,.5);
+}

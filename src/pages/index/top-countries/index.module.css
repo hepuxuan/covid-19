@@ -1,0 +1,55 @@
+.card {
+  padding: 20px;
+  text-align: center;
+  min-height: 131px;
+  display: flex;
+  justify-content: center;
+}
+
+.countryRow {
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.countryRow > * {
+  padding: 0 10px;
+  vertical-align: middle;
+}
+
+.countryCardRow {
+  padding: 8px 0 0 !important;
+}
+.countryCardRow .rowLabel {
+  text-align: right;
+}
+.countryCardRow .rowItem {
+  display: inline-block;
+  width: 100%;
+  text-align: left;
+}
+.countryFlag {
+  vertical-align: middle;
+}
+
+.deltaConfirmed {
+  font-size: 12px;
+  color: rgba(0,0,255,1);
+}
+
+.deltaDeaths {
+  font-size: 12px;
+  color: rgb(236, 49, 75);
+}
+
+.deltaRecovered {
+  font-size: 12px;
+  color: rgb(5, 181, 132);
+}
+
+@media only screen and (min-width: 600px) {
+  .countryCard {
+    min-height: 161px;
+  }
+}

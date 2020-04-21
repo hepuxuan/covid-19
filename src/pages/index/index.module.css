@@ -1,27 +1,3 @@
-.card {
-  padding: 20px;
-  text-align: center;
-  min-height: 131px;
-  display: flex;
-  justify-content: center;
-}
-
-.confirmCard {
-  border-bottom: 10px solid rgba(0,0,255,1);
-}
-
-.deathCard {
-  border-bottom: 10px solid rgb(236, 49, 75);
-}
-
-.recoverdCard {
-  border-bottom: 10px solid rgb(5, 181, 132);
-}
-
-.activeCard {
-  border-bottom: 10px solid rgba(247, 76, 49,.5);
-}
-
 .trendCard {
   padding: 20px;
 }
@@ -30,48 +6,15 @@
   margin-top: 24px;
 }
 
-.countryRow {
-  white-space: nowrap;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.spinnerWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+  box-sizing: border-box;
 }
 
-.countryRow > * {
-  padding: 0 10px;
-  vertical-align: middle;
-}
-
-.countryCardRow {
-  padding: 8px 0 0 !important;
-}
-.countryCardRow .rowLabel {
-  text-align: right;
-}
-.countryCardRow .rowItem {
-  display: inline-block;
-  width: 100%;
-  text-align: left;
-}
-.countryFlag {
-  vertical-align: middle;
-}
-
-.deltaConfirmed {
-  font-size: 12px;
-  color: rgba(0,0,255,1);
-}
-
-.deltaDeaths {
-  font-size: 12px;
-  color: rgb(236, 49, 75);
-}
-
-.deltaRecovered {
-  font-size: 12px;
-  color: rgb(5, 181, 132);
-}
-
-.countryCard {
-  min-height: 161px;
+.title {
+  padding: 0 16px;
+  margin-bottom: 0;
 }
