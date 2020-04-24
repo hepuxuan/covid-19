@@ -61,7 +61,7 @@ function App() {
                 {
                   routes.map((props) => (
                     <Route key={props.path} path={props.path} exact={props.exact}>
-                      <PageWrapper prefetch={props.prefetch}>
+                      <PageWrapper usePrefetch={props.usePrefetch}>
                         <props.component />
                       </PageWrapper>
                     </Route>

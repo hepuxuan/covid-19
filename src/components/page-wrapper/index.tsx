@@ -4,21 +4,21 @@ import styles from './index.module.css';
 
 const PageWrapper: React.FC<{
   fallback?: React.ReactNode,
-  prefetch?: () => void,
+  usePrefetch?: () => void,
 }> = ({
   children, fallback = (
     <div className={styles.spinnerWrapper}>
       <CircularProgress size="large" />
     </div>
   ),
-  prefetch = () => { },
+  usePrefetch = () => { },
 }) => {
-  prefetch();
-  return (
-    <React.Suspense fallback={fallback}>
-      {children}
-    </React.Suspense>
-  );
-};
+    usePrefetch();
+    return (
+      <React.Suspense fallback={fallback}>
+        {children}
+      </React.Suspense>
+    );
+  };
 
 export default PageWrapper;
