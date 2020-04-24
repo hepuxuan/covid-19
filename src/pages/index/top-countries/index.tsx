@@ -27,114 +27,114 @@ const TopCountries: React.FC<{}> = () => {
             iso3,
             iso2,
           }) => (
-              <GridCell desktop={3} phone={4} key={country}>
-                <Card className={classnames(styles.card, styles.countryCard)}>
-                  <CardPrimaryAction>
-                    <Link to={`/countries/${iso3}`}>
-                      <Typography use="subtitle1" className={styles.countryRow}>
-                        <img src={`https://www.countryflags.io/${iso2}/flat/16.png`} alt={country} />
-                        {country}
-                      </Typography>
-                      <Typography use="body2">
-                        <Grid className={styles.countryCardRow}>
-                          <GridRow>
-                            <GridCell desktop={5} phone={2}>
-                              <Typography use="caption" className={styles.rowLabel}>
-                                confirmed:&nbsp;
-                              </Typography>
-                            </GridCell>
-                            <GridCell className={styles.rowItem} desktop={7} phone={2}>
-                              <CountUp
-                                start={0}
-                                end={confirmed}
-                                duration={2.75}
-                                separator=","
-                              />
-                              <span className={styles.deltaConfirmed}>
-                                &nbsp;
-                                {
+            <GridCell desktop={3} phone={4} key={country}>
+              <Card className={classnames(styles.card, styles.countryCard)}>
+                <CardPrimaryAction>
+                  <Link to={`/countries/${iso3}`}>
+                    <Typography use="subtitle1" className={styles.countryRow}>
+                      <img src={`https://www.countryflags.io/${iso2}/flat/16.png`} alt={country} />
+                      {country}
+                    </Typography>
+                    <Typography use="body2">
+                      <Grid className={styles.countryCardRow}>
+                        <GridRow>
+                          <GridCell desktop={5} phone={2}>
+                            <Typography use="caption" className={styles.rowLabel}>
+                              confirmed:&nbsp;
+                            </Typography>
+                          </GridCell>
+                          <GridCell className={styles.rowItem} desktop={7} phone={2}>
+                            <CountUp
+                              start={0}
+                              end={confirmed}
+                              duration={2.75}
+                              separator=","
+                            />
+                            <span className={styles.deltaConfirmed}>
+                              &nbsp;
+                              {
                                   getNumericSign(deltaConfirmed)
                                 }
-                                <CountUp
-                                  start={0}
-                                  end={deltaConfirmed}
-                                  duration={2.75}
-                                  separator=","
-                                />
-
-                              </span>
-                            </GridCell>
-                          </GridRow>
-                        </Grid>
-
-                        <Grid className={styles.countryCardRow}>
-                          <GridRow>
-                            <GridCell desktop={5} phone={2}>
-                              <Typography use="caption" className={styles.rowLabel}>
-                                deaths:&nbsp;
-                              </Typography>
-                            </GridCell>
-                            <GridCell className={styles.rowItem} desktop={7} phone={2}>
                               <CountUp
-
                                 start={0}
-                                end={deaths}
+                                end={deltaConfirmed}
                                 duration={2.75}
                                 separator=","
                               />
-                              <span className={styles.deltaDeaths}>
-                                &nbsp;
-                                {
+
+                            </span>
+                          </GridCell>
+                        </GridRow>
+                      </Grid>
+
+                      <Grid className={styles.countryCardRow}>
+                        <GridRow>
+                          <GridCell desktop={5} phone={2}>
+                            <Typography use="caption" className={styles.rowLabel}>
+                              deaths:&nbsp;
+                            </Typography>
+                          </GridCell>
+                          <GridCell className={styles.rowItem} desktop={7} phone={2}>
+                            <CountUp
+
+                              start={0}
+                              end={deaths}
+                              duration={2.75}
+                              separator=","
+                            />
+                            <span className={styles.deltaDeaths}>
+                              &nbsp;
+                              {
                                   getNumericSign(deltaDeaths)
                                 }
-                                <CountUp
-                                  start={0}
-                                  end={deltaDeaths}
-                                  duration={2.75}
-                                  separator=","
-                                />
-
-                              </span>
-                            </GridCell>
-                          </GridRow>
-                        </Grid>
-                        <Grid className={styles.countryCardRow}>
-                          <GridRow>
-                            <GridCell desktop={5} phone={2}>
-                              <Typography use="caption" className={styles.rowLabel}>
-                                recovered:&nbsp;
-                              </Typography>
-                            </GridCell>
-                            <GridCell className={styles.rowItem} desktop={7} phone={2}>
                               <CountUp
-
                                 start={0}
-                                end={recovered}
+                                end={deltaDeaths}
                                 duration={2.75}
                                 separator=","
                               />
-                              <span className={styles.deltaRecovered}>
-                                &nbsp;
-                                {
+
+                            </span>
+                          </GridCell>
+                        </GridRow>
+                      </Grid>
+                      <Grid className={styles.countryCardRow}>
+                        <GridRow>
+                          <GridCell desktop={5} phone={2}>
+                            <Typography use="caption" className={styles.rowLabel}>
+                              recovered:&nbsp;
+                            </Typography>
+                          </GridCell>
+                          <GridCell className={styles.rowItem} desktop={7} phone={2}>
+                            <CountUp
+
+                              start={0}
+                              end={recovered}
+                              duration={2.75}
+                              separator=","
+                            />
+                            <span className={styles.deltaRecovered}>
+                              &nbsp;
+                              {
                                   getNumericSign(deltaRecovered)
                                 }
-                                <CountUp
-                                  start={0}
-                                  end={deltaRecovered}
-                                  duration={2.75}
-                                  separator=","
-                                />
+                              <CountUp
+                                start={0}
+                                end={deltaRecovered}
+                                duration={2.75}
+                                separator=","
+                              />
 
-                              </span>
-                            </GridCell>
-                          </GridRow>
-                        </Grid>
-                      </Typography>
-                    </Link>
-                  </CardPrimaryAction>
-                </Card>
-              </GridCell>
-            ))
+                            </span>
+                          </GridCell>
+                        </GridRow>
+                      </Grid>
+                    </Typography>
+                  </Link>
+                </CardPrimaryAction>
+              </Card>
+            </GridCell>
+          ))
         }
         <GridCell desktop={3} phone={4}>
           <Card className={classnames(styles.card, styles.countryCard)}>

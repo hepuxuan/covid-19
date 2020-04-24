@@ -31,13 +31,6 @@ a, a:visited {
   overflow: hidden;
   display: inline-block;
   vertical-align: middle;
-}
-
-.spinnerWrapper {
-  min-height: calc(100vh - 64px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 0;
-  box-sizing: border-box;
+  display: inline-block;
+  min-width: 75px;
 }

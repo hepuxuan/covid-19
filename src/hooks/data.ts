@@ -45,14 +45,8 @@ function groupDailyDateByField(confirmedData: any, field: string) {
 
 function useConfirmedDataByCountry(config: ConfigInterface = {}) {
   const prevDate = moment().subtract(2, 'days').format('YYYY-MM-DD');
-
-  const { data: [confirmedData, prevConfirmedData], ...rest } = useSWR(['/api/confirmed', `/api/daily/${prevDate}`].join(','), (key) => {
-    const [url1, url2] = key.split(',');
-    return Promise.all([fetcher(url1), fetcher(url2)]);
-  }, {
-    suspense: true,
-    ...config,
-  });
+  const { data: confirmedData, ...rest } = useConfirmData(config);
+  const { data: prevConfirmedData } = useDailyDetailsData(prevDate, config);
 
   const normalizedData = React.useMemo(() => {
     if (!confirmedData || !prevConfirmedData) {
@@ -107,14 +101,8 @@ function useConfirmedDataByCountry(config: ConfigInterface = {}) {
 
 function useDailyDataByCountry(date: string, config: ConfigInterface = {}) {
   const prevDate = moment(date).subtract(1, 'days').format('YYYY-MM-DD');
-
-  const { data: [confirmedData, prevConfirmedData], ...rest } = useSWR([`/api/daily/${date}`, `/api/daily/${prevDate}`].join(','), (key) => {
-    const [url1, url2] = key.split(',');
-    return Promise.all([fetcher(url1), fetcher(url2)]);
-  }, {
-    suspense: true,
-    ...config,
-  });
+  const { data: confirmedData, ...rest } = useDailyDetailsData(date, config);
+  const { data: prevConfirmedData } = useDailyDetailsData(prevDate, config);
 
   const normalizedData = React.useMemo(() => {
     if (!confirmedData || !prevDate) {
@@ -162,13 +150,9 @@ function useDailyDataByCountry(date: string, config: ConfigInterface = {}) {
 
 function useConfirmedDataByState(iso3: string, date: string, config: ConfigInterface = {}) {
   const prevDate = moment(date).subtract(1, 'days').format('YYYY-MM-DD');
-  const { data: [confirmedData, prevConfirmedData], ...rest } = useSWR([`/api/daily/${date}`, `/api/daily/${prevDate}`].join(','), (key) => {
-    const [url1, url2] = key.split(',');
-    return Promise.all([fetcher(url1), fetcher(url2)]);
-  }, {
-    suspense: true,
-    ...config,
-  });
+  const { data: confirmedData, ...rest } = useDailyDetailsData(date, config);
+  const { data: prevConfirmedData } = useDailyDetailsData(prevDate, config);
+
   const normalizedData = React.useMemo(() => {
     if (!confirmedData || !prevDate) {
       return [];

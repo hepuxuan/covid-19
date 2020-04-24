@@ -3,11 +3,10 @@ import ReactDOM from 'react-dom';
 import App from './components/app';
 import { register, unregister } from './serviceWorker';
 
-ReactDOM.render(
+(ReactDOM as any).createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
-  document.getElementById('root'),
 );
 
 if (process.env.NODE_ENV === 'production') {
