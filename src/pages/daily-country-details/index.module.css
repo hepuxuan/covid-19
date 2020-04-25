@@ -1,3 +1,22 @@
 .pageWrapper {
   padding: 16px;
 }
+
+.countryTable {
+  width: 100%;
+  margin-top: 16px;
+  max-height: calc(100vh - 130px);
+  overflow: auto;
+}
+
+.deltaConfirmed {
+  color: rgba(0,0,255,1);
+}
+
+.deltaDeaths {
+  color: rgb(236, 49, 75);
+}
+
+.deltaRecovered {
+  color: rgb(5, 181, 132);
+}

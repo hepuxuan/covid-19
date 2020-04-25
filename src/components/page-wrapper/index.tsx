@@ -13,12 +13,12 @@ const PageWrapper: React.FC<{
   ),
   usePrefetch = () => { },
 }) => {
-    usePrefetch();
-    return (
-      <React.Suspense fallback={fallback}>
-        {children}
-      </React.Suspense>
-    );
-  };
+  usePrefetch();
+  return (
+    <React.Suspense fallback={fallback}>
+      {children}
+    </React.Suspense>
+  );
+};
 
 export default PageWrapper;

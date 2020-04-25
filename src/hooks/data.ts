@@ -26,8 +26,18 @@ function useCountryConfirmData(iso3: string, config: ConfigInterface = {}) {
   return useSWR(`/api/countries/${iso3}/confirmed`, fetcher, { suspense: true, ...config });
 }
 
+function useCountries(config: ConfigInterface = {}) {
+  return useSWR<{
+    countries: {
+      name: string;
+      iso2: string;
+      iso3: string;
+    }[]
+  }>('/api/countries', fetcher, { suspense: true, ...config });
+}
+
 function groupDailyDateByField(confirmedData: any, field: string) {
-  return toPairs(groupBy(confirmedData, field)).map(([, list]) => {
+  const groupedDailyDate = toPairs(groupBy(confirmedData, field)).map(([, list]) => {
     const confirmed = sum(list.map((data) => +data.confirmed));
     const recovered = sum(list.map((data) => +data.recovered));
     const deaths = sum(list.map((data) => +data.deaths));
@@ -41,6 +51,20 @@ function groupDailyDateByField(confirmedData: any, field: string) {
       lastUpdate: list?.[0]?.lastUpdate,
     };
   });
+
+  const total = {
+    [field]: 'Total',
+    list: [],
+    confirmed: sum(confirmedData.map((data: any) => +data.confirmed)),
+    recovered: sum(confirmedData.map((data: any) => +data.recovered)),
+    deaths: sum(confirmedData.map((data: any) => +data.deaths)),
+    lastUpdate: confirmedData?.[0]?.lastUpdate,
+  };
+
+  return {
+    list: groupedDailyDate,
+    total,
+  };
 }
 
 function useConfirmedDataByCountry(config: ConfigInterface = {}) {
@@ -59,7 +83,7 @@ function useConfirmedDataByCountry(config: ConfigInterface = {}) {
       let deltaConfirmed: number;
       let deltaRecovered: number;
       let deltaDeaths: number;
-      const prevCountryData = prevDailyData
+      const prevCountryData = prevDailyData.list
         .find((prevItem) => prevItem.countryRegion === country);
       const confirmed = sum(list.map((data) => +data.confirmed));
       const recovered = sum(list.map((data) => +data.recovered));
@@ -112,11 +136,11 @@ function useDailyDataByCountry(date: string, config: ConfigInterface = {}) {
     const dailyData = groupDailyDateByField(confirmedData, 'countryRegion');
     const prevDailyData = groupDailyDateByField(prevConfirmedData, 'countryRegion');
 
-    return dailyData.map((item) => {
+    return dailyData.list.map((item) => {
       let deltaConfirmed: number;
       let deltaRecovered: number;
       let deltaDeaths: number;
-      const prevCountryData = prevDailyData
+      const prevCountryData = prevDailyData.list
         .find((prevItem) => prevItem.countryRegion === item.countryRegion);
 
       if (prevCountryData) {
@@ -148,6 +172,68 @@ function useDailyDataByCountry(date: string, config: ConfigInterface = {}) {
   };
 }
 
+function useDailyDataByState(country: string, date: string, config: ConfigInterface = {}) {
+  const prevDate = moment(date).subtract(1, 'days').format('YYYY-MM-DD');
+  const { data: confirmedData, ...rest } = useDailyDetailsData(date, config);
+  const { data: prevConfirmedData } = useDailyDetailsData(prevDate, config);
+
+  const normalizedData = React.useMemo(() => {
+    if (!confirmedData || !prevDate) {
+      return {
+        list: null,
+        total: null,
+      };
+    }
+
+    const dailyData = groupDailyDateByField(confirmedData.filter((item: any) => item.countryRegion === country), 'provinceState');
+    const prevDailyData = groupDailyDateByField(prevConfirmedData.filter((item: any) => item.countryRegion === country), 'provinceState');
+
+    const list = dailyData.list.map((item) => {
+      let deltaConfirmed: number;
+      let deltaRecovered: number;
+      let deltaDeaths: number;
+      const prevCountryData = prevDailyData.list
+        .find((prevItem) => prevItem.provinceState === item.provinceState);
+
+      if (prevCountryData) {
+        deltaConfirmed = +item.confirmed - (+prevCountryData.confirmed);
+        deltaRecovered = +item.recovered - (+prevCountryData.recovered);
+        deltaDeaths = +item.deaths - (+prevCountryData.deaths);
+      } else {
+        deltaConfirmed = +item.confirmed;
+        deltaRecovered = +item.recovered;
+        deltaDeaths = +item.deaths;
+      }
+
+      return {
+        deltaConfirmed,
+        deltaRecovered,
+        deltaDeaths,
+        provinceState: item.provinceState,
+        confirmed: item.confirmed,
+        recovered: item.recovered,
+        deaths: item.deaths,
+        ...item,
+      };
+    });
+    const total = {
+      ...dailyData.total,
+      deltaConfirmed: +dailyData.total.confirmed - (+prevDailyData.total.confirmed),
+      deltaRecovered: +dailyData.total.recovered - (+prevDailyData.total.recovered),
+      deltaDeaths: +dailyData.total.deaths - (+prevDailyData.total.deaths),
+    };
+
+    return {
+      list, total,
+    };
+  }, [confirmedData, prevDate, prevConfirmedData, country]);
+
+  return {
+    data: normalizedData,
+    ...rest,
+  };
+}
+
 function useConfirmedDataByState(iso3: string, date: string, config: ConfigInterface = {}) {
   const prevDate = moment(date).subtract(1, 'days').format('YYYY-MM-DD');
   const { data: confirmedData, ...rest } = useDailyDetailsData(date, config);
@@ -155,18 +241,23 @@ function useConfirmedDataByState(iso3: string, date: string, config: ConfigInter
 
   const normalizedData = React.useMemo(() => {
     if (!confirmedData || !prevDate) {
-      return [];
+      return {
+        list: null,
+        total: null,
+      };
     }
 
     const confirmedCountryData = confirmedData.filter((item: any) => item.countryRegion === iso3);
+    const prevConfirmedCountryData = prevConfirmedData
+      .filter((item: any) => item.countryRegion === iso3);
     const dailyData = groupDailyDateByField(confirmedCountryData, 'provinceState');
-    const prevDailyData = groupDailyDateByField(prevConfirmedData, 'provinceState');
+    const prevDailyData = groupDailyDateByField(prevConfirmedCountryData, 'provinceState');
 
-    return dailyData.map((item) => {
+    const list: any[] = dailyData.list.map((item) => {
       let deltaConfirmed: number;
       let deltaRecovered: number;
       let deltaDeaths: number;
-      const prevCountryData = prevDailyData
+      const prevCountryData = prevDailyData.list
         .find((prevItem) => prevItem.provinceState === item.provinceState);
 
       if (prevCountryData) {
@@ -187,6 +278,17 @@ function useConfirmedDataByState(iso3: string, date: string, config: ConfigInter
         ...item,
       };
     });
+
+    const total = {
+      ...dailyData.total,
+      deltaConfirmed: +dailyData.total.confirmed - (+prevDailyData.total.confirmed),
+      deltaRecovered: +dailyData.total.recovered - (+prevDailyData.total.recovered),
+      deltaDeaths: +dailyData.total.deaths - (+prevDailyData.total.deaths),
+    };
+
+    return {
+      list, total,
+    };
   }, [confirmedData, prevDate, prevConfirmedData, iso3]);
 
   return {
@@ -204,4 +306,6 @@ export {
   useConfirmedDataByState,
   useDailyDetailsData,
   useDailyDataByCountry,
+  useCountries,
+  useDailyDataByState,
 };

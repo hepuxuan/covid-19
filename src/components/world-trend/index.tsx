@@ -2,8 +2,10 @@ import React from 'react';
 import { Chart } from '@antv/g2';
 import Measure from 'react-measure';
 import DataSet from '@antv/data-set';
+import { Card } from '@rmwc/card';
 import mapData from '../../countries.geo.json';
 import { useConfirmData } from '../../hooks/data';
+import styles from './index.module.css';
 
 const container = 'world-trend-chart';
 
@@ -11,7 +13,7 @@ const WorldTrend: React.FC<{}> = () => {
   const [width, setWidth] = React.useState<number>();
   const [hasRendered, setHasRendered] = React.useState(false);
   const { data: confirmedData } = useConfirmData();
-
+  const canvasHeight = width ? (width / 971) * 800 : 0;
   React.useEffect(() => {
     if (!confirmedData || !width || hasRendered) {
       return;
@@ -19,7 +21,7 @@ const WorldTrend: React.FC<{}> = () => {
     const chart = new Chart({
       container,
       autoFit: true,
-      height: (width / 971) * 800,
+      height: canvasHeight,
     });
     setHasRendered(true);
     // force sync scales
@@ -94,21 +96,23 @@ const WorldTrend: React.FC<{}> = () => {
     pointView.interaction('element-active');
 
     chart.render();
-  }, [confirmedData, width, hasRendered]);
+  }, [confirmedData, width, hasRendered, canvasHeight]);
 
   return (
-    <Measure
-      bounds
-      onResize={(contentRect) => {
-        if (contentRect.bounds) {
-          setWidth(contentRect.bounds.width);
-        }
-      }}
-    >
-      {({ measureRef }) => (
-        <div ref={measureRef} id={container} />
-      )}
-    </Measure>
+    <Card className={styles.trendCard} style={{ height: canvasHeight + 40 }}>
+      <Measure
+        bounds
+        onResize={(contentRect) => {
+          if (contentRect.bounds) {
+            setWidth(contentRect.bounds.width);
+          }
+        }}
+      >
+        {({ measureRef }) => (
+          <div ref={measureRef} id={container} />
+        )}
+      </Measure>
+    </Card>
 
   );
 };

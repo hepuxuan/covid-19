@@ -60,11 +60,20 @@ function App() {
               <Switch>
                 {
                   routes.map((props) => (
-                    <Route key={props.path} path={props.path} exact={props.exact}>
-                      <PageWrapper usePrefetch={props.usePrefetch}>
-                        <props.component />
-                      </PageWrapper>
-                    </Route>
+                    <Route
+                      key={props.path}
+                      path={props.path}
+                      exact={props.exact}
+                      render={(routeProps) => (
+                        <PageWrapper
+                          usePrefetch={() => {
+                            props.usePrefetch(routeProps);
+                          }}
+                        >
+                          <props.component />
+                        </PageWrapper>
+                      )}
+                    />
                   ))
                 }
               </Switch>

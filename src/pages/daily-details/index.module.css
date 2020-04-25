@@ -34,3 +34,7 @@
 .deltaRecovered {
   color: rgb(5, 181, 132);
 }
+
+.countryFlag {
+  vertical-align: middle;
+}

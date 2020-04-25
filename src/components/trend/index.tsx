@@ -1,14 +1,22 @@
 import React from 'react';
 import Measure from 'react-measure';
 import { Chart } from '@antv/g2';
-import { useDailyData } from '../../hooks/data';
+import { Card } from '@rmwc/card';
+import styles from './index.module.css';
 
 const container = 'trend-chart';
 
-const Trend: React.FC<{ height?: number }> = ({ height }) => {
+const Trend: React.FC<{
+  height?: number,
+  dailyData: {
+    totalConfirmed: number;
+    deaths: number;
+    reportDate: string;
+  }[]
+}> = ({ height, dailyData }) => {
   const [width, setWidth] = React.useState<number>();
   const [hasRendered, setHasRendered] = React.useState(false);
-  const { data: dailyData } = useDailyData();
+  const canvasHeight = height ?? (width ? (width / 971) * 800 : 0);
   React.useEffect(() => {
     if (!dailyData || !width || hasRendered) {
       return;
@@ -16,7 +24,7 @@ const Trend: React.FC<{ height?: number }> = ({ height }) => {
     const chart = new Chart({
       container,
       autoFit: true,
-      height: height ?? (width / 971) * 800,
+      height: canvasHeight,
     });
     setHasRendered(true);
     chart.data([
@@ -56,21 +64,23 @@ const Trend: React.FC<{ height?: number }> = ({ height }) => {
     });
 
     chart.render();
-  }, [dailyData, width, hasRendered, height]);
+  }, [dailyData, width, hasRendered, canvasHeight]);
 
   return (
-    <Measure
-      bounds
-      onResize={(contentRect) => {
-        if (contentRect.bounds) {
-          setWidth(contentRect.bounds.width);
-        }
-      }}
-    >
-      {({ measureRef }) => (
-        <div ref={measureRef} id={container} />
-      )}
-    </Measure>
+    <Card className={styles.trendCard} style={{ height: canvasHeight + 40 }}>
+      <Measure
+        bounds
+        onResize={(contentRect) => {
+          if (contentRect.bounds) {
+            setWidth(contentRect.bounds.width);
+          }
+        }}
+      >
+        {({ measureRef }) => (
+          <div ref={measureRef} id={container} />
+        )}
+      </Measure>
+    </Card>
   );
 };
 

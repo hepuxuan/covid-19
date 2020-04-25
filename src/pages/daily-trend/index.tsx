@@ -1,5 +1,4 @@
 import React from 'react';
-import { Card } from '@rmwc/card';
 import { Grid, GridRow, GridCell } from '@rmwc/grid';
 import {
   DataTable,
@@ -20,6 +19,10 @@ import { useDailyData } from '../../hooks/data';
 
 const DailyTrend: React.FC<{}> = () => {
   const { data: dailyData } = useDailyData();
+  const sortedDailyData = React.useMemo(() => dailyData.sort(
+    (a: any, b: any) => moment(b.reportDate).toDate().valueOf()
+      - moment(a.reportDate).toDate().valueOf(),
+  ), [dailyData]);
 
   return (
     <Grid>
@@ -45,10 +48,7 @@ const DailyTrend: React.FC<{}> = () => {
               </DataTableHead>
               <DataTableBody>
                 {
-                  dailyData.sort(
-                    (a: any, b: any) => moment(b.reportDate).toDate().valueOf()
-                      - moment(a.reportDate).toDate().valueOf(),
-                  ).map(({
+                  sortedDailyData.map(({
                     reportDate, deltaConfirmed, deaths, totalConfirmed,
                   }: any) => (
                     <DataTableRow key={reportDate}>
@@ -68,9 +68,7 @@ const DailyTrend: React.FC<{}> = () => {
           </DataTable>
         </GridCell>
         <GridCell span={4}>
-          <Card className={styles.trendCard}>
-            <Trend height={300} />
-          </Card>
+          <Trend dailyData={dailyData} height={300} />
         </GridCell>
       </GridRow>
     </Grid>

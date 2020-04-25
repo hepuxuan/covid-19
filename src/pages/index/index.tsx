@@ -1,14 +1,13 @@
 import React from 'react';
-import { Card } from '@rmwc/card';
 import { GridCell, Grid, GridRow } from '@rmwc/grid';
 import { Typography } from '@rmwc/typography';
 import { CircularProgress } from '@rmwc/circular-progress';
 import styles from './index.module.css';
-import Trend from '../../components/trend';
 import WorldTrend from '../../components/world-trend';
 import TopCountries from './top-countries';
 import GlobalTrend from './global-trend';
 import { useDailyData, useConfirmData, useOverallData } from '../../hooks/data';
+import TrendChart from './trend-chart';
 
 const { SuspenseList } = React as any;
 
@@ -45,14 +44,10 @@ const Index: React.FC<{}> = () => {
           <Grid>
             <GridRow>
               <GridCell desktop={6}>
-                <Card className={styles.trendCard}>
-                  <Trend />
-                </Card>
+                <TrendChart />
               </GridCell>
               <GridCell desktop={6}>
-                <Card className={styles.trendCard}>
-                  <WorldTrend />
-                </Card>
+                <WorldTrend />
               </GridCell>
             </GridRow>
           </Grid>

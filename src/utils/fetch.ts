@@ -11,7 +11,10 @@ async function fetcher(url: string) {
   return res.json();
 }
 
-function getNumericSign(number: number | string) {
+function getNumericSign(number?: number | string) {
+  if (number === undefined) {
+    return null;
+  }
   return +number >= 0 ? '+' : '';
 }
 

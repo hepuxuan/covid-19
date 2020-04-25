@@ -24,13 +24,12 @@ const TopCountries: React.FC<{}> = () => {
             deltaRecovered,
             deaths,
             recovered,
-            iso3,
             iso2,
           }) => (
             <GridCell desktop={3} phone={4} key={country}>
               <Card className={classnames(styles.card, styles.countryCard)}>
                 <CardPrimaryAction>
-                  <Link to={`/countries/${iso3}`}>
+                  <Link to={`/countries/${country}`}>
                     <Typography use="subtitle1" className={styles.countryRow}>
                       <img src={`https://www.countryflags.io/${iso2}/flat/16.png`} alt={country} />
                       {country}
