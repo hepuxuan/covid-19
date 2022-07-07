@@ -16,7 +16,7 @@
     "@rmwc/typography": "^6.0.14",
     "classnames": "^2.2.6",
     "lodash": "^4.17.15",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "normalize.css": "^8.0.1",
     "react": "^16.13.1",
     "react-countup": "^4.3.3",
